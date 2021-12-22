@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://asset/texture/entity.png" type="Texture" id=1]
+[ext_resource path="res://src/entity/state_machine/state_machine.gd" type="Script" id=2]
+[ext_resource path="res://src/entity/state_machine/state.gd" type="Script" id=3]
+
+[node name="Entity" type="Node2D"]
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+offset = Vector2( 0, -8 )
+
+[connection signal="transitioned" from="StateMachine" to="StateMachine" method="_on_StateMachine_transitioned"]
