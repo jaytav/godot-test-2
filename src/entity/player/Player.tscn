@@ -4,5 +4,8 @@
 
 [node name="Player" instance=ExtResource( 1 )]
 
-[node name="Sprite" parent="." index="1"]
+[node name="Initiative" parent="Stats" index="0"]
+initial_value = 10
+
+[node name="Sprite" parent="." index="2"]
 modulate = Color( 0.521569, 0.909804, 0.988235, 1 )

@@ -10,11 +10,17 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Node",
+"class": "Stat",
+"language": "GDScript",
+"path": "res://src/entity/stat/stat.gd"
+}, {
+"base": "Node",
 "class": "State",
 "language": "GDScript",
 "path": "res://src/entity/state_machine/state.gd"
 } ]
 _global_script_class_icons={
+"Stat": "",
 "State": ""
 }
 
