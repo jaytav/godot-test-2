@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/entity/player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://asset/texture/floor.png" type="Texture" id=2]
+[ext_resource path="res://test/entity/turn_skipper/TurnSkipper.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/main.gd" type="Script" id=4]
 
 [sub_resource type="TileSet" id=1]
 0/name = "floor.png 0"
@@ -20,6 +22,7 @@
 0/z_index = 0
 
 [node name="Main" type="Node"]
+script = ExtResource( 4 )
 
 [node name="GUI" type="Control" parent="."]
 anchor_right = 1.0
@@ -42,3 +45,14 @@ tile_data = PoolIntArray( -262138, 0, 0, -262137, 0, 0, -262136, 0, 0, -196604, 
 
 [node name="Player" parent="World/Entities" instance=ExtResource( 1 )]
 position = Vector2( 80, 64 )
+
+[node name="TurnSkipper" parent="World/Entities" instance=ExtResource( 3 )]
+position = Vector2( 128, 56 )
+
+[connection signal="turn_ended" from="World/Entities/Player" to="World/Entities/Player" method="_on_Entity_turn_ended"]
+[connection signal="turn_started" from="World/Entities/Player" to="World/Entities/Player" method="_on_Entity_turn_started"]
+[connection signal="turn_ended" from="World/Entities/TurnSkipper" to="World/Entities/TurnSkipper" method="_on_Entity_turn_ended"]
+[connection signal="turn_started" from="World/Entities/TurnSkipper" to="World/Entities/TurnSkipper" method="_on_Entity_turn_started"]
+
+[editable path="World/Entities/Player"]
+[editable path="World/Entities/TurnSkipper"]

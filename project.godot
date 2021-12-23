@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node2D",
+"class": "Entity",
+"language": "GDScript",
+"path": "res://src/entity/entity.gd"
+}, {
 "base": "Node",
 "class": "Stat",
 "language": "GDScript",
@@ -18,10 +23,17 @@ _global_script_classes=[ {
 "class": "State",
 "language": "GDScript",
 "path": "res://src/entity/state_machine/state.gd"
+}, {
+"base": "Node",
+"class": "TurnQueue",
+"language": "GDScript",
+"path": "res://src/game/turn_queue.gd"
 } ]
 _global_script_class_icons={
+"Entity": "",
 "Stat": "",
-"State": ""
+"State": "",
+"TurnQueue": ""
 }
 
 [application]
