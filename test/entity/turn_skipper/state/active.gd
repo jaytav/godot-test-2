@@ -8,4 +8,4 @@ func enter():
 
 
 func _on_AnimationPlayer_animation_finished(_anim_name: String) -> void:
-	owner.end_turn()
+    owner.end_turn()
