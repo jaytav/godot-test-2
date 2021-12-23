@@ -8,7 +8,7 @@ export var initial_value: int
 var value: int setget _set_value
 
 
-func _ready() -> void:
+func _ready():
 	value = initial_value
 
 

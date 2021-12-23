@@ -35,7 +35,7 @@ func transition_to_state(state: String) -> void:
 	emit_signal("transitioned", from_state, _active_state)
 
 
-func _on_StateMachine_transitioned(from_state: State, to_state: State):
+func _on_StateMachine_transitioned(from_state: State, to_state: State) -> void:
 	if from_state:
 		print("%s transitioned from %s to %s" % [owner.name, from_state.name, to_state.name])
 	else:
