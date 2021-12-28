@@ -1,8 +1,9 @@
 class_name Entity
 extends Node2D
 
-signal turn_started
-signal turn_ended
+signal turn_started(entity)
+signal turn_ended(entity)
+
 
 onready var _state_machine = get_node("StateMachine")
 
@@ -13,9 +14,9 @@ func get_stat(stat: String):
 
 func start_turn() -> void:
     _state_machine.transition_to_state("Active")
-    emit_signal("turn_started")
+    emit_signal("turn_started", self)
 
 
 func end_turn() -> void:
     _state_machine.transition_to_state("Idle")
-    emit_signal("turn_ended")
+    emit_signal("turn_ended", self)
