@@ -47,5 +47,6 @@ texture = ExtResource( 1 )
 offset = Vector2( 0, -8 )
 
 [connection signal="turn_ended" from="." to="StatusEffects" method="_on_Entity_turn_ended"]
-[connection signal="updated" from="Stats/HealthPoints" to="." method="_on_HealthPoints_updated"]
+[connection signal="turn_ended" from="." to="StateMachine" method="_on_Entity_turn_ended"]
+[connection signal="turn_started" from="." to="StateMachine" method="_on_Entity_turn_started"]
 [connection signal="transitioned" from="StateMachine" to="StateMachine" method="_on_StateMachine_transitioned"]

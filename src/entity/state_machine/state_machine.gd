@@ -44,3 +44,11 @@ func _on_StateMachine_transitioned(from_state: State, to_state: State) -> void:
         print("%s transitioned from %s to %s" % [owner.name, from_state.name, to_state.name])
     else:
         print("%s transitioned to %s" % [owner.name, to_state.name])
+
+
+func _on_Entity_turn_started(entity: Entity):
+    transition_to_state("Move")
+
+
+func _on_Entity_turn_ended(entity: Entity):
+    transition_to_state("Idle")
