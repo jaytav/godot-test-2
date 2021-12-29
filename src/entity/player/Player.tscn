@@ -11,6 +11,9 @@ initial_value = 25
 [node name="ActionPoints" parent="Stats" index="1"]
 max_value = 3
 
+[node name="HealthPoints" parent="Stats" index="2"]
+max_value = 3
+
 [node name="Move" parent="StateMachine" index="1"]
 script = ExtResource( 2 )
 

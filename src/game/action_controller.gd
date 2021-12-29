@@ -50,6 +50,9 @@ func draw_movement(entity: Entity):
     for point in _astar.get_points():
         var point_path_positions: PoolVector2Array = _astar.get_point_path(entity_point, point)
 
+        if len(point_path_positions) == 0:
+            continue
+
         # remove entity point position
         point_path_positions.remove(0)
 

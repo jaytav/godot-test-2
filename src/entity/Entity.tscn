@@ -23,6 +23,9 @@ script = ExtResource( 3 )
 [node name="ActionPoints" type="Node" parent="Stats"]
 script = ExtResource( 6 )
 
+[node name="HealthPoints" type="Node" parent="Stats"]
+script = ExtResource( 6 )
+
 [node name="StatusEffects" type="Node" parent="."]
 script = ExtResource( 7 )
 
@@ -44,4 +47,5 @@ texture = ExtResource( 1 )
 offset = Vector2( 0, -8 )
 
 [connection signal="turn_ended" from="." to="StatusEffects" method="_on_Entity_turn_ended"]
+[connection signal="updated" from="Stats/HealthPoints" to="." method="_on_HealthPoints_updated"]
 [connection signal="transitioned" from="StateMachine" to="StateMachine" method="_on_StateMachine_transitioned"]
