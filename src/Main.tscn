@@ -1,9 +1,35 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://src/entity/player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://asset/texture/floor.png" type="Texture" id=2]
 [ext_resource path="res://test/entity/turn_skipper/TurnSkipper.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/main.gd" type="Script" id=4]
+[ext_resource path="res://src/game/turn_queue_ui.gd" type="Script" id=5]
+[ext_resource path="res://asset/texture/arrow.png" type="Texture" id=6]
+
+[sub_resource type="Animation" id=2]
+resource_name = "Point"
+loop = true
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:rect_position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 96, -0.25, 0, 0.25, 0, 92, -0.25, 0, 0.25, 0, 96, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5, 1 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath(".:rect_position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray(  ),
+"times": PoolRealArray(  )
+}
 
 [sub_resource type="TileSet" id=1]
 0/name = "floor.png 0"
@@ -30,6 +56,48 @@ anchor_bottom = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="TurnQueueUI" type="Control" parent="GUI"]
+anchor_left = 0.008
+anchor_top = 0.013
+anchor_right = 0.07
+anchor_bottom = 0.12
+margin_left = -0.192
+margin_top = 0.2
+margin_right = 0.32
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemList" type="ItemList" parent="GUI/TurnQueueUI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+auto_height = true
+max_columns = 10
+same_column_width = true
+fixed_icon_size = Vector2( 56, 44 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="GUI/TurnQueueUI"]
+modulate = Color( 0.972549, 0.435294, 0.435294, 1 )
+margin_left = 104.0
+margin_top = 16.0
+margin_right = 136.0
+margin_bottom = 48.0
+rect_rotation = 90.0
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GUI/TurnQueueUI/TextureRect"]
+autoplay = "Point"
+anims/Point = SubResource( 2 )
 
 [node name="World" type="Node2D" parent="."]
 scale = Vector2( 4, 4 )

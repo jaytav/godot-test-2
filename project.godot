@@ -28,12 +28,18 @@ _global_script_classes=[ {
 "class": "State",
 "language": "GDScript",
 "path": "res://src/entity/state_machine/state.gd"
+}, {
+"base": "Control",
+"class": "TurnQueueUI",
+"language": "GDScript",
+"path": "res://src/game/turn_queue_ui.gd"
 } ]
 _global_script_class_icons={
 "ActionController": "",
 "Entity": "",
 "Stat": "",
-"State": ""
+"State": "",
+"TurnQueueUI": ""
 }
 
 [application]
