@@ -13,7 +13,7 @@ func get_stat(stat: String):
 
 
 func start_turn() -> void:
-    _state_machine.transition_to_state("Active")
+    _state_machine.transition_to_state("Move")
     emit_signal("turn_started", self)
 
 
