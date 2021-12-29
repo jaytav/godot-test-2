@@ -1,4 +1,3 @@
-class_name TurnQueue
 extends Node
 
 var entities: Array setget _set_entities

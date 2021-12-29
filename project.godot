@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "ActionController",
+"language": "GDScript",
+"path": "res://src/game/action_controller.gd"
+}, {
 "base": "Node2D",
 "class": "Entity",
 "language": "GDScript",
@@ -23,23 +28,30 @@ _global_script_classes=[ {
 "class": "State",
 "language": "GDScript",
 "path": "res://src/entity/state_machine/state.gd"
-}, {
-"base": "Node",
-"class": "TurnQueue",
-"language": "GDScript",
-"path": "res://src/game/turn_queue.gd"
 } ]
 _global_script_class_icons={
+"ActionController": "",
 "Entity": "",
 "Stat": "",
-"State": "",
-"TurnQueue": ""
+"State": ""
 }
 
 [application]
 
 config/name="GodotTest2"
 run/main_scene="res://src/Main.tscn"
+
+[autoload]
+
+TurnQueue="*res://src/game/turn_queue.gd"
+
+[input]
+
+left_click={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
 
 [physics]
 
