@@ -9,11 +9,6 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node",
-"class": "ActionController",
-"language": "GDScript",
-"path": "res://src/game/action_controller.gd"
-}, {
 "base": "Node2D",
 "class": "Entity",
 "language": "GDScript",
@@ -29,16 +24,21 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/entity/state_machine/state.gd"
 }, {
+"base": "Node",
+"class": "StatusEffect",
+"language": "GDScript",
+"path": "res://src/entity/status_effect/status_effect.gd"
+}, {
 "base": "Control",
 "class": "TurnQueueUI",
 "language": "GDScript",
 "path": "res://src/game/turn_queue_ui.gd"
 } ]
 _global_script_class_icons={
-"ActionController": "",
 "Entity": "",
 "Stat": "",
 "State": "",
+"StatusEffect": "",
 "TurnQueueUI": ""
 }
 
@@ -50,6 +50,12 @@ run/main_scene="res://src/Main.tscn"
 [autoload]
 
 TurnQueue="*res://src/game/turn_queue.gd"
+ActionController="*res://src/game/action_controller.gd"
+
+[display]
+
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
 
 [input]
 

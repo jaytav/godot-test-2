@@ -4,12 +4,14 @@ extends Node2D
 signal turn_started(entity)
 signal turn_ended(entity)
 
+var stats: Dictionary
 
 onready var _state_machine = get_node("StateMachine")
 
 
-func get_stat(stat: String):
-    return get_node("Stats/%s" % stat)
+func _ready():
+    for stat in get_node("Stats").get_children():
+        stats[stat.name] = stat
 
 
 func start_turn() -> void:

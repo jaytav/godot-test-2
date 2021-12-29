@@ -32,6 +32,9 @@ tracks/1/keys = {
 [node name="Initiative" parent="Stats" index="0"]
 initial_value = 20
 
+[node name="ActionPoints" parent="Stats" index="1"]
+max_value = 1
+
 [node name="Move" parent="StateMachine" index="1"]
 script = ExtResource( 2 )
 

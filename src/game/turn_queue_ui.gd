@@ -11,7 +11,7 @@ func _set_entities(to_entities: Array):
 
     for i in range(len(entities)):
         var sprite: Sprite = entities[i].get_node("Sprite")
-        item_list.add_item(entities[i].name, sprite.texture)
+        item_list.add_icon_item(sprite.texture)
         item_list.set_item_icon_modulate(i, sprite.modulate)
 
 

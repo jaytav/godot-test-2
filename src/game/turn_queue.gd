@@ -25,7 +25,7 @@ func _set_entities(to_entities: Array) -> void:
 
 
 func _sort_entities(a: Entity, b: Entity) -> bool:
-    return a.get_stat("Initiative").value > b.get_stat("Initiative").value
+    return a.stats.Initiative.value > b.stats.Initiative.value
 
 
 func _on_active_entity_turn_ended(_entity: Entity):

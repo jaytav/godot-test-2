@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://src/entity/player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://asset/texture/floor.png" type="Texture" id=2]
@@ -6,30 +6,10 @@
 [ext_resource path="res://src/main.gd" type="Script" id=4]
 [ext_resource path="res://src/game/turn_queue_ui.gd" type="Script" id=5]
 [ext_resource path="res://asset/texture/arrow.png" type="Texture" id=6]
-
-[sub_resource type="Animation" id=2]
-resource_name = "Point"
-loop = true
-tracks/0/type = "bezier"
-tracks/0/path = NodePath(".:rect_position:x")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"points": PoolRealArray( 96, -0.25, 0, 0.25, 0, 92, -0.25, 0, 0.25, 0, 96, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.5, 1 )
-}
-tracks/1/type = "bezier"
-tracks/1/path = NodePath(".:rect_position:y")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"points": PoolRealArray(  ),
-"times": PoolRealArray(  )
-}
+[ext_resource path="res://asset/texture/action.png" type="Texture" id=7]
+[ext_resource path="res://src/entity/entity.gd" type="Script" id=8]
+[ext_resource path="res://src/entity/state_machine/state_machine.gd" type="Script" id=9]
+[ext_resource path="res://asset/texture/entity.png" type="Texture" id=10]
 
 [sub_resource type="TileSet" id=1]
 0/name = "floor.png 0"
@@ -47,75 +27,140 @@ tracks/1/keys = {
 0/shapes = [  ]
 0/z_index = 0
 
+[sub_resource type="TileSet" id=4]
+0/name = "action.png 0"
+0/texture = ExtResource( 7 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 32, 32 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+
+[sub_resource type="Animation" id=5]
+resource_name = "Point"
+loop = true
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:rect_position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 30, -0.25, 0, 0.25, 0, 28, -0.25, 0, 0.25, 0, 30, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5, 1 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath(".:rect_position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray(  ),
+"times": PoolRealArray(  )
+}
+
 [node name="Main" type="Node"]
 script = ExtResource( 4 )
 
-[node name="GUI" type="Control" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TurnQueueUI" type="Control" parent="GUI"]
-anchor_left = 0.008
-anchor_top = 0.013
-anchor_right = 0.07
-anchor_bottom = 0.12
-margin_left = -0.192
-margin_top = 0.2
-margin_right = 0.32
-script = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ItemList" type="ItemList" parent="GUI/TurnQueueUI"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-auto_height = true
-max_columns = 10
-same_column_width = true
-fixed_icon_size = Vector2( 56, 44 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect" type="TextureRect" parent="GUI/TurnQueueUI"]
-modulate = Color( 0.972549, 0.435294, 0.435294, 1 )
-margin_left = 104.0
-margin_top = 16.0
-margin_right = 136.0
-margin_bottom = 48.0
-rect_rotation = 90.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="GUI/TurnQueueUI/TextureRect"]
-autoplay = "Point"
-anims/Point = SubResource( 2 )
-
 [node name="World" type="Node2D" parent="."]
-scale = Vector2( 4, 4 )
+
+[node name="Camera2D" type="Camera2D" parent="World"]
+position = Vector2( 128, 75 )
+current = true
+zoom = Vector2( 0.25, 0.25 )
 
 [node name="Floor" type="TileMap" parent="World"]
 mode = 1
 tile_set = SubResource( 1 )
 cell_size = Vector2( 32, 16 )
 format = 1
-tile_data = PoolIntArray( -262138, 0, 0, -262137, 0, 0, -262136, 0, 0, -196604, 0, 0, -196603, 0, 0, -196602, 0, 0, -196601, 0, 0, -196600, 0, 0, -196599, 0, 0, -131068, 0, 0, -131067, 0, 0, -131066, 0, 0, -131065, 0, 0, -131064, 0, 0, -131063, 0, 0, -131062, 0, 0, -65532, 0, 0, -65531, 0, 0, -65530, 0, 0, -65529, 0, 0, -65528, 0, 0, -65527, 0, 0, -65526, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 65540, 0, 0, 65541, 0, 0, 65542, 0, 0, 65543, 0, 0, 65544, 0, 0, 65545, 0, 0, 65546, 0, 0, 65547, 0, 0, 131077, 0, 0, 131078, 0, 0, 131079, 0, 0, 131080, 0, 0, 131081, 0, 0, 131082, 0, 0, 196614, 0, 0, 196615, 0, 0, 196616, 0, 0, 196617, 0, 0 )
+tile_data = PoolIntArray( -262140, 0, 0, -262139, 0, 0, -262138, 0, 0, -262137, 0, 0, -262136, 0, 0, -262135, 0, 0, -196604, 0, 0, -196603, 0, 0, -196602, 0, 0, -196601, 0, 0, -196600, 0, 0, -196599, 0, 0, -196598, 0, 0, -131069, 0, 0, -131068, 0, 0, -131067, 0, 0, -131066, 0, 0, -131065, 0, 0, -131064, 0, 0, -131063, 0, 0, -131062, 0, 0, -65533, 0, 0, -65532, 0, 0, -65531, 0, 0, -65530, 0, 0, -65529, 0, 0, -65528, 0, 0, -65527, 0, 0, -65526, 0, 0, -65525, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 65540, 0, 0, 65541, 0, 0, 65542, 0, 0, 65543, 0, 0, 65544, 0, 0, 65545, 0, 0, 65546, 0, 0, 65547, 0, 0, 131076, 0, 0, 131078, 0, 0, 131079, 0, 0, 131080, 0, 0, 131081, 0, 0, 131082, 0, 0, 131083, 0, 0, 196612, 0, 0, 196613, 0, 0, 196614, 0, 0, 196615, 0, 0, 196616, 0, 0, 196617, 0, 0, 196618, 0, 0, 196619, 0, 0, 262150, 0, 0, 262151, 0, 0, 262152, 0, 0, 262153, 0, 0, 262154, 0, 0 )
 
-[node name="Entities" type="Node2D" parent="World"]
+[node name="Action" type="TileMap" parent="World"]
+mode = 1
+tile_set = SubResource( 4 )
+cell_size = Vector2( 32, 16 )
+cell_tile_origin = 2
+format = 1
+
+[node name="Entities" type="YSort" parent="World"]
 
 [node name="Player" parent="World/Entities" instance=ExtResource( 1 )]
-position = Vector2( 80, 64 )
+position = Vector2( 80, 80 )
+script = ExtResource( 8 )
+
+[node name="StateMachine" parent="World/Entities/Player" index="1"]
+script = ExtResource( 9 )
+
+[node name="Sprite" parent="World/Entities/Player" index="2"]
+texture = ExtResource( 10 )
+offset = Vector2( 0, -8 )
+script = null
 
 [node name="TurnSkipper" parent="World/Entities" instance=ExtResource( 3 )]
-position = Vector2( 128, 56 )
+position = Vector2( 96, 56 )
+script = ExtResource( 8 )
+
+[node name="StateMachine" parent="World/Entities/TurnSkipper" index="1"]
+script = ExtResource( 9 )
+
+[node name="Sprite" parent="World/Entities/TurnSkipper" index="2"]
+texture = ExtResource( 10 )
+offset = Vector2( 0, -8 )
+script = null
+
+[node name="GUI" type="Control" parent="."]
+margin_right = 256.0
+margin_bottom = 150.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TurnQueueUI" type="Control" parent="GUI"]
+margin_right = 20.0
+margin_bottom = 20.0
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemList" type="ItemList" parent="GUI/TurnQueueUI"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 42.0
+margin_bottom = 42.0
+rect_scale = Vector2( 0.5, 0.5 )
+auto_height = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="GUI/TurnQueueUI"]
+modulate = Color( 1, 0.552941, 0.552941, 1 )
+margin_left = 30.0
+margin_top = 11.0
+margin_right = 38.0
+margin_bottom = 18.0
+rect_rotation = 90.0
+texture = ExtResource( 6 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GUI/TurnQueueUI/TextureRect"]
+autoplay = "Point"
+anims/Point = SubResource( 5 )
 
 [connection signal="turn_ended" from="World/Entities/Player" to="World/Entities/Player" method="_on_Entity_turn_ended"]
 [connection signal="turn_started" from="World/Entities/Player" to="World/Entities/Player" method="_on_Entity_turn_started"]
