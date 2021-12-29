@@ -2,6 +2,8 @@ extends Node
 
 signal transitioned(from_state, to_state)
 
+export var _debug: bool
+
 var _active_state: State
 
 
@@ -36,7 +38,9 @@ func transition_to_state(state: String) -> void:
 
 
 func _on_StateMachine_transitioned(from_state: State, to_state: State) -> void:
-    if from_state:
+    if !_debug:
+        pass
+    elif from_state:
         print("%s transitioned from %s to %s" % [owner.name, from_state.name, to_state.name])
     else:
         print("%s transitioned to %s" % [owner.name, to_state.name])
