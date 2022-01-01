@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://src/entity/player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://asset/texture/floor.png" type="Texture" id=2]
@@ -7,11 +7,6 @@
 [ext_resource path="res://src/game/turn_queue_ui.gd" type="Script" id=5]
 [ext_resource path="res://asset/texture/arrow.png" type="Texture" id=6]
 [ext_resource path="res://asset/texture/action.png" type="Texture" id=7]
-[ext_resource path="res://src/entity/entity.gd" type="Script" id=8]
-[ext_resource path="res://src/entity/status_effect/status_effects.gd" type="Script" id=9]
-[ext_resource path="res://src/entity/status_effect/replenish_bound_stat.gd" type="Script" id=10]
-[ext_resource path="res://src/entity/state_machine/state.gd" type="Script" id=11]
-[ext_resource path="res://asset/texture/entity.png" type="Texture" id=12]
 
 [sub_resource type="TileSet" id=1]
 0/name = "floor.png 0"
@@ -97,31 +92,9 @@ format = 1
 
 [node name="Player" parent="World/Entities" instance=ExtResource( 1 )]
 position = Vector2( 80, 80 )
-script = ExtResource( 8 )
-
-[node name="StatusEffects" parent="World/Entities/Player" index="1"]
-script = ExtResource( 9 )
-
-[node name="ReplenishActionPoints" parent="World/Entities/Player/StatusEffects" index="0"]
-script = ExtResource( 10 )
 
 [node name="TurnSkipper" parent="World/Entities" instance=ExtResource( 3 )]
 position = Vector2( 96, 56 )
-script = ExtResource( 8 )
-
-[node name="StatusEffects" parent="World/Entities/TurnSkipper" index="1"]
-script = ExtResource( 9 )
-
-[node name="ReplenishActionPoints" parent="World/Entities/TurnSkipper/StatusEffects" index="0"]
-script = ExtResource( 10 )
-
-[node name="Idle" parent="World/Entities/TurnSkipper/StateMachine" index="0"]
-script = ExtResource( 11 )
-
-[node name="Sprite" parent="World/Entities/TurnSkipper" index="3"]
-texture = ExtResource( 12 )
-offset = Vector2( 0, -8 )
-script = null
 
 [node name="GUI" type="Control" parent="."]
 margin_right = 256.0

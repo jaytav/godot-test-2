@@ -1,5 +1,7 @@
 extends Node
 
+const EntityMover = preload("res://src/game/mover/EntityMover.tscn")
+
 export var _action_movement_modulate: Color = Color("#deffcf")
 
 var entities: Array setget _set_entities
@@ -32,11 +34,17 @@ func request_action(request: Dictionary) -> void:
             return
 
         entity.stats.ActionPoints.value -= move_cost
-        entity.position = action_tile_map.map_to_world(point_path_positions[move_cost])
-        entity.position.y += action_tile_map.cell_size.y / 2
 
-        _refresh_astar()
-        draw_movement(entity)
+        var entity_mover = EntityMover.instance()
+        entity_mover.connect("entity_moved", self, "_on_EntityMover_entity_moved")
+        entity_mover.entity = entity
+
+        for point_path_position in point_path_positions:
+            var point_path_world_position: Vector2 = action_tile_map.map_to_world(point_path_position)
+            point_path_world_position.y += action_tile_map.cell_size.y / 2
+            entity_mover.curve.add_point(point_path_world_position)
+
+        get_parent().get_node("Main/World").add_child(entity_mover)
 
 
 func draw_movement(entity: Entity):
@@ -122,3 +130,8 @@ func _on_PlayerControlled_Entity_turn_started(entity: Entity) -> void:
 
 func _on_PlayerControlled_Entity_turn_ended(_entity: Entity) -> void:
     action_tile_map.clear()
+
+
+func _on_EntityMover_entity_moved(entity: Entity):
+    _refresh_astar()
+    draw_movement(entity)
