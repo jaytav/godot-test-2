@@ -38,16 +38,15 @@ func transition_to_state(state: String) -> void:
 
 
 func _on_StateMachine_transitioned(from_state: State, to_state: State) -> void:
-    if !_debug:
-        pass
-    elif from_state:
-        print("%s transitioned from %s to %s" % [owner.name, from_state.name, to_state.name])
-    else:
-        print("%s transitioned to %s" % [owner.name, to_state.name])
+    if _debug:
+        if from_state:
+            print("%s transitioned from %s to %s" % [owner.name, from_state.name, to_state.name])
+        else:
+            print("%s transitioned to %s" % [owner.name, to_state.name])
 
 
 func _on_Entity_turn_started(_entity: Entity):
-    transition_to_state("Move")
+    transition_to_state("Active")
 
 
 func _on_Entity_turn_ended(_entity: Entity):

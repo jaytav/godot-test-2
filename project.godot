@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "Action",
+"language": "GDScript",
+"path": "res://src/entity/action/action.gd"
+}, {
 "base": "Node2D",
 "class": "Entity",
 "language": "GDScript",
@@ -32,9 +37,10 @@ _global_script_classes=[ {
 "base": "Control",
 "class": "TurnQueueUI",
 "language": "GDScript",
-"path": "res://src/game/turn_queue_ui.gd"
+"path": "res://src/game/turn/turn_queue_ui.gd"
 } ]
 _global_script_class_icons={
+"Action": "",
 "Entity": "",
 "Stat": "",
 "State": "",
@@ -49,8 +55,8 @@ run/main_scene="res://src/Main.tscn"
 
 [autoload]
 
-TurnQueue="*res://src/game/turn_queue.gd"
-ActionController="*res://src/game/action_controller.gd"
+ActionController="*res://src/game/action/action_controller.gd"
+TurnQueue="*res://src/game/turn/turn_queue.gd"
 
 [display]
 

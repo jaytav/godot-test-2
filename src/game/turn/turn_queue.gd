@@ -1,6 +1,6 @@
 extends Node
 
-var turn_queue_ui
+var turn_queue_ui: Control
 var entities: Array setget _set_entities
 
 var _active_entity: Entity

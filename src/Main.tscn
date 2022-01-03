@@ -1,12 +1,14 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://src/entity/player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://asset/texture/floor.png" type="Texture" id=2]
 [ext_resource path="res://test/entity/turn_skipper/TurnSkipper.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/main.gd" type="Script" id=4]
-[ext_resource path="res://src/game/turn_queue_ui.gd" type="Script" id=5]
+[ext_resource path="res://src/game/turn/turn_queue_ui.gd" type="Script" id=5]
 [ext_resource path="res://asset/texture/arrow.png" type="Texture" id=6]
 [ext_resource path="res://asset/texture/action.png" type="Texture" id=7]
+[ext_resource path="res://src/game/action/action_controller_ui.gd" type="Script" id=9]
+[ext_resource path="res://asset/texture/action_selected.png" type="Texture" id=11]
 
 [sub_resource type="TileSet" id=1]
 0/name = "floor.png 0"
@@ -39,6 +41,20 @@
 0/shape_one_way_margin = 0.0
 0/shapes = [  ]
 0/z_index = 0
+1/name = "action_selected.png 1"
+1/texture = ExtResource( 11 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 0, 0, 32, 32 )
+1/tile_mode = 0
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shape_offset = Vector2( 0, 0 )
+1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+1/shape_one_way = false
+1/shape_one_way_margin = 0.0
+1/shapes = [  ]
+1/z_index = 0
 
 [sub_resource type="Animation" id=5]
 resource_name = "Point"
@@ -82,6 +98,7 @@ format = 1
 tile_data = PoolIntArray( -262140, 0, 0, -262139, 0, 0, -262138, 0, 0, -262137, 0, 0, -262136, 0, 0, -262135, 0, 0, -196604, 0, 0, -196603, 0, 0, -196602, 0, 0, -196601, 0, 0, -196600, 0, 0, -196599, 0, 0, -196598, 0, 0, -131069, 0, 0, -131068, 0, 0, -131067, 0, 0, -131066, 0, 0, -131065, 0, 0, -131064, 0, 0, -131063, 0, 0, -131062, 0, 0, -65533, 0, 0, -65532, 0, 0, -65531, 0, 0, -65530, 0, 0, -65529, 0, 0, -65528, 0, 0, -65527, 0, 0, -65526, 0, 0, -65525, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 65540, 0, 0, 65541, 0, 0, 65542, 0, 0, 65543, 0, 0, 65544, 0, 0, 65545, 0, 0, 65546, 0, 0, 65547, 0, 0, 131076, 0, 0, 131078, 0, 0, 131079, 0, 0, 131080, 0, 0, 131081, 0, 0, 131082, 0, 0, 131083, 0, 0, 196612, 0, 0, 196613, 0, 0, 196614, 0, 0, 196615, 0, 0, 196616, 0, 0, 196617, 0, 0, 196618, 0, 0, 196619, 0, 0, 262150, 0, 0, 262151, 0, 0, 262152, 0, 0, 262153, 0, 0, 262154, 0, 0 )
 
 [node name="Action" type="TileMap" parent="World"]
+modulate = Color( 0, 0, 0, 1 )
 mode = 1
 tile_set = SubResource( 4 )
 cell_size = Vector2( 32, 16 )
@@ -94,7 +111,7 @@ format = 1
 position = Vector2( 80, 80 )
 
 [node name="TurnSkipper" parent="World/Entities" instance=ExtResource( 3 )]
-position = Vector2( 96, 56 )
+position = Vector2( 112, 48 )
 
 [node name="GUI" type="Control" parent="."]
 margin_right = 256.0
@@ -118,6 +135,7 @@ margin_top = 2.0
 margin_right = 42.0
 margin_bottom = 42.0
 rect_scale = Vector2( 0.5, 0.5 )
+mouse_filter = 2
 auto_height = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -141,10 +159,26 @@ __meta__ = {
 autoplay = "Point"
 anims/Point = SubResource( 5 )
 
-[connection signal="turn_ended" from="World/Entities/Player" to="World/Entities/Player" method="_on_Entity_turn_ended"]
-[connection signal="turn_started" from="World/Entities/Player" to="World/Entities/Player" method="_on_Entity_turn_started"]
-[connection signal="turn_ended" from="World/Entities/TurnSkipper" to="World/Entities/TurnSkipper" method="_on_Entity_turn_ended"]
-[connection signal="turn_started" from="World/Entities/TurnSkipper" to="World/Entities/TurnSkipper" method="_on_Entity_turn_started"]
+[node name="ActionControllerUI" type="Control" parent="GUI"]
+anchor_left = 0.008
+anchor_top = 0.853
+anchor_right = 1.0
+anchor_bottom = 0.987
+margin_left = -0.0480001
+margin_top = 0.0499954
+margin_bottom = -0.0500031
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[editable path="World/Entities/Player"]
-[editable path="World/Entities/TurnSkipper"]
+[node name="GridContainer" type="GridContainer" parent="GUI/ActionControllerUI"]
+anchor_right = 0.992
+anchor_bottom = 1.0
+margin_right = 252.032
+margin_bottom = 20.0
+rect_scale = Vector2( 0.5, 0.5 )
+columns = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
