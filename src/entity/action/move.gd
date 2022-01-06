@@ -26,6 +26,7 @@ func _on_ActionPoints_updated(_from_value: int, to_value: int):
 
 
 func _on_EntityMover_entity_moved(entity: Entity):
+    EntityController.refresh_entity_cells()
     ActionController.refresh_astar()
 
     if entity.is_in_group("PlayerControlled"):

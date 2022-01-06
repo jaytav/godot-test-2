@@ -38,6 +38,7 @@ func do_action(action: Action, position: Vector2) -> void:
         request.entity.get_node("Actions/Move").set_active()
 
 
+
 func draw_action(action: Action) -> void:
     action_tile_map.clear()
     action_tile_map.modulate = action.tile_map_modulate

@@ -31,7 +31,7 @@ tile_map_modulate = Color( 1, 0.501961, 0.501961, 1 )
 damage = 1
 action_point_cost = 1
 
-[node name="Sprite" parent="." index="4"]
+[node name="Sprite" parent="." index="5"]
 modulate = Color( 0.521569, 0.909804, 0.988235, 1 )
 
 [connection signal="turn_started" from="." to="." method="_on_Player_turn_started"]

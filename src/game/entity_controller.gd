@@ -6,6 +6,13 @@ var entities: Array setget _set_entities
 var entity_cells: Dictionary
 
 
+func refresh_entity_cells() -> void:
+    entity_cells = {}
+
+    for entity in entities:
+        entity_cells[ActionController.action_tile_map.world_to_map(entity.position)] = entity
+
+
 func _sort_entities(a: Entity, b: Entity) -> bool:
     return a.stats.Initiative.value > b.stats.Initiative.value
 
@@ -23,12 +30,12 @@ func _set_entities(to_entities) -> void:
             only_player_entities = false
 
         entity.connect("died", self, "_on_entity_died")
-        entity_cells[ActionController.action_tile_map.world_to_map(entity.position)] = entity
 
     if only_player_entities:
-        print("player wins")
+        print("You Win!")
         get_tree().quit()
 
+    refresh_entity_cells()
     emit_signal("entities_updated", from_entities, entities)
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://asset/texture/entity.png" type="Texture" id=1]
 [ext_resource path="res://src/entity/state_machine/state_machine.gd" type="Script" id=2]
@@ -9,12 +9,11 @@
 [ext_resource path="res://src/entity/status_effect/status_effects.gd" type="Script" id=7]
 [ext_resource path="res://src/entity/status_effect/replenish_bound_stat.gd" type="Script" id=8]
 [ext_resource path="res://src/entity/action/move.gd" type="Script" id=9]
+[ext_resource path="res://src/entity/gui/gui_health_points.gd" type="Script" id=10]
+[ext_resource path="res://asset/texture/white.png" type="Texture" id=11]
 
 [node name="Entity" type="Node2D"]
 script = ExtResource( 5 )
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Stats" type="Node" parent="."]
 
@@ -54,9 +53,42 @@ tile_map_modulate = Color( 0.870588, 1, 0.811765, 1 )
 texture = ExtResource( 1 )
 offset = Vector2( 0, -8 )
 
+[node name="GUI" type="Control" parent="."]
+margin_left = -24.0
+margin_top = -24.0
+margin_right = 24.0
+margin_bottom = 16.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthPoints" type="TextureProgress" parent="GUI"]
+anchor_left = 0.5
+anchor_top = 0.6
+anchor_right = 0.5
+anchor_bottom = 0.6
+margin_left = -8.0
+margin_top = -19.0
+margin_right = 56.0
+margin_bottom = -5.0
+rect_scale = Vector2( 0.24704, 0.216672 )
+mouse_filter = 2
+value = 50.0
+texture_under = ExtResource( 11 )
+texture_progress = ExtResource( 11 )
+tint_under = Color( 0.968627, 0.756863, 0.756863, 1 )
+tint_progress = Color( 0.878431, 0.580392, 0.580392, 1 )
+nine_patch_stretch = true
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="turn_ended" from="." to="StatusEffects" method="_on_Entity_turn_ended"]
 [connection signal="turn_ended" from="." to="StateMachine" method="_on_Entity_turn_ended"]
 [connection signal="turn_started" from="." to="StateMachine" method="_on_Entity_turn_started"]
 [connection signal="updated" from="Stats/ActionPoints" to="Actions/Move" method="_on_ActionPoints_updated"]
 [connection signal="updated" from="Stats/HealthPoints" to="." method="_on_HealthPoints_updated"]
+[connection signal="updated" from="Stats/HealthPoints" to="GUI/HealthPoints" method="_on_HealthPoints_updated"]
 [connection signal="transitioned" from="StateMachine" to="StateMachine" method="_on_StateMachine_transitioned"]
