@@ -58,4 +58,5 @@ offset = Vector2( 0, -8 )
 [connection signal="turn_ended" from="." to="StateMachine" method="_on_Entity_turn_ended"]
 [connection signal="turn_started" from="." to="StateMachine" method="_on_Entity_turn_started"]
 [connection signal="updated" from="Stats/ActionPoints" to="Actions/Move" method="_on_ActionPoints_updated"]
+[connection signal="updated" from="Stats/HealthPoints" to="." method="_on_HealthPoints_updated"]
 [connection signal="transitioned" from="StateMachine" to="StateMachine" method="_on_StateMachine_transitioned"]

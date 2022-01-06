@@ -1,9 +1,20 @@
 extends Node
 
 var turn_queue_ui: Control
-var entities: Array setget _set_entities
+var entities: Array
 
 var _active_entity: Entity
+
+
+func _init():
+    EntityController.connect("entities_updated", self, "_on_EntityController_entitites_updated")
+
+
+func _on_EntityController_entitites_updated(_from_entities: Array, to_entities: Array) -> void:
+    entities = []
+
+    for entity in to_entities:
+        entities.append(entity)
 
 
 func start_next_turn() -> void:
@@ -15,17 +26,6 @@ func start_next_turn() -> void:
     _active_entity.connect("turn_ended", self, "_on_active_entity_turn_ended")
     _active_entity.connect("turn_ended", turn_queue_ui, "_on_active_entity_turn_ended")
     _active_entity.start_turn()
-
-
-func _set_entities(to_entities: Array) -> void:
-    to_entities.sort_custom(self, "_sort_entities")
-
-    entities = to_entities
-    turn_queue_ui.entities = to_entities
-
-
-func _sort_entities(a: Entity, b: Entity) -> bool:
-    return a.stats.Initiative.value > b.stats.Initiative.value
 
 
 func _on_active_entity_turn_ended(_entity: Entity):

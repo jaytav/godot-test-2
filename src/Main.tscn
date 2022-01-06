@@ -113,6 +113,9 @@ position = Vector2( 80, 80 )
 [node name="TurnSkipper" parent="World/Entities" instance=ExtResource( 3 )]
 position = Vector2( 112, 48 )
 
+[node name="TurnSkipper2" parent="World/Entities" instance=ExtResource( 3 )]
+position = Vector2( 112, 80 )
+
 [node name="GUI" type="Control" parent="."]
 margin_right = 256.0
 margin_bottom = 150.0

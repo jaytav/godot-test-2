@@ -55,6 +55,7 @@ run/main_scene="res://src/Main.tscn"
 
 [autoload]
 
+EntityController="*res://src/game/entity_controller.gd"
 ActionController="*res://src/game/action/action_controller.gd"
 TurnQueue="*res://src/game/turn/turn_queue.gd"
 

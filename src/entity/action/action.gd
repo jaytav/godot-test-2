@@ -9,3 +9,8 @@ export var tile_map_modulate: Color
 
 func do_action(_request: Dictionary) -> void:
     pass
+
+
+func set_active():
+    owner.active_action = self
+    ActionController.draw_action(self)

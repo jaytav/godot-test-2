@@ -3,6 +3,7 @@ extends Node2D
 
 signal turn_started(entity)
 signal turn_ended(entity)
+signal died(entity)
 
 var stats: Dictionary
 
@@ -18,3 +19,9 @@ func start_turn() -> void:
 
 func end_turn() -> void:
     emit_signal("turn_ended", self)
+
+
+func _on_HealthPoints_updated(from_value: int, to_value: int):
+    if to_value == 0:
+        queue_free()
+        emit_signal("died", self)

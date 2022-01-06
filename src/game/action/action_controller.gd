@@ -1,16 +1,15 @@
 extends Node
 
-
 var action_controller_ui: Control
-var entities: Array setget _set_entities
 var action_tile_map: TileMap
 var floor_tile_map: TileMap
 
-
-var _active_entity: Entity
 var _astar: AStar2D = AStar2D.new()
-var _entity_cells: Array = []
 var _action_cell: Vector2
+
+
+func _init():
+    EntityController.connect("entities_updated", self, "_on_EntityController_entitites_updated")
 
 
 func do_action(action: Action, position: Vector2) -> void:
@@ -34,6 +33,9 @@ func do_action(action: Action, position: Vector2) -> void:
         request.point_path_positions = _astar.get_point_path(request.entity_point, request.action_point)
 
     action.do_action(request)
+
+    if request.entity.is_in_group("PlayerControlled"):
+        request.entity.get_node("Actions/Move").set_active()
 
 
 func draw_action(action: Action) -> void:
@@ -80,25 +82,23 @@ func draw_action_behaviour(action: Action, position: Vector2) -> void:
         _action_cell = Vector2.ZERO
         return
 
-    var entity_point: int = _get_vector_point_index(entity_cell)
-    var action_point: int = _get_vector_point_index(action_cell)
-    var point_path_positions: PoolVector2Array = _astar.get_point_path(entity_point, action_point)
+    if action.use_point_path:
+        var entity_point: int = _get_vector_point_index(entity_cell)
+        var action_point: int = _get_vector_point_index(action_cell)
+        var point_path_positions: PoolVector2Array = _astar.get_point_path(entity_point, action_point)
 
-    # remove entity point position
-    point_path_positions.remove(0)
+        # remove entity point position
+        point_path_positions.remove(0)
 
-    for point_path_position in point_path_positions:
-        action_tile_map.set_cellv(point_path_position, 1)
+        for point_path_position in point_path_positions:
+            action_tile_map.set_cellv(point_path_position, 1)
+    else:
+        action_tile_map.set_cellv(action_cell, 1)
 
     _action_cell = action_cell
 
 
 func refresh_astar():
-    _entity_cells = []
-
-    for entity in entities:
-        _entity_cells.append(action_tile_map.world_to_map(entity.position))
-
     for cell in floor_tile_map.get_used_cells():
         _astar.add_point(_get_vector_point_index(cell), cell)
 
@@ -118,7 +118,7 @@ func refresh_astar():
             if !_astar.has_point(relative_cell_point):
                 continue
 
-            if _entity_cells.has(relative_cell):
+            if EntityController.entity_cells.has(relative_cell):
                 continue
 
             _astar.connect_points(point, relative_cell_point, false)
@@ -133,11 +133,13 @@ func _get_vector_point_index(position: Vector2) -> int:
     return vector_point_index
 
 
-func _set_entities(to_entities: Array):
-    entities = to_entities
+func _on_EntityController_entitites_updated(_from_entities: Array, _to_entities: Array) -> void:
     refresh_astar()
 
-    for entity in entities:
+    for entity in EntityController.entities:
+        if entity.is_connected("turn_started", self, "_on_PlayerControlled_Entity_turn_started"):
+            continue
+
         if entity.is_in_group("PlayerControlled"):
             entity.connect("turn_started", self, "_on_PlayerControlled_Entity_turn_started")
             entity.connect("turn_ended", self, "_on_PlayerControlled_Entity_turn_ended")
